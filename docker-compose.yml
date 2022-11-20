@@ -1,0 +1,56 @@
+version: "3.9"
+services:
+  # soap:
+  #   container_name: soap
+  #   image: tubes-1:latest
+  #   hostname: soap
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 8001:80
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #     phpmyadmin:
+  #       condition: service_started
+  #   networks:
+  #     - binotify-soap
+
+  db:
+    container_name: mysql
+    image: mysql:latest
+    hostname: mysql
+    ports:
+      - 9001:3306
+    restart: always
+    healthcheck:
+      test: mysqladmin ping -h localhost -u${MYSQL_USER} -p{MYSQL_PASSWORD}
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - binotify-soap
+    env_file: .env
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    hostname: phpmyadmin
+    networks:
+      - binotify-soap
+    environment:
+      PMA_HOST: db
+    depends_on:
+      - db
+    ports:
+      - 9002:80
+
+volumes:
+  mysql:
+    driver: local
+
+networks:
+  binotify-soap:
