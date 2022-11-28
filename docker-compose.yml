@@ -17,7 +17,7 @@ services:
   #     - binotify-soap
 
   db:
-    container_name: mysql
+    container_name: soap_mysql
     image: mysql:latest
     hostname: mysql
     ports:
@@ -34,19 +34,6 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
-
-  phpmyadmin:
-    container_name: phpmyadmin
-    image: phpmyadmin:latest
-    hostname: phpmyadmin
-    networks:
-      - binotify-soap
-    environment:
-      PMA_HOST: db
-    depends_on:
-      - db
-    ports:
-      - 9002:80
 
 volumes:
   mysql:

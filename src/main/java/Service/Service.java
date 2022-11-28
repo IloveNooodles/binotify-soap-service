@@ -10,4 +10,5 @@ public interface Service {
 
     @WebMethod
     public String hi(String full);
+
 }
