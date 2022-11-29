@@ -1,27 +1,11 @@
 version: "3.9"
 services:
-  # soap:
-  #   container_name: soap
-  #   image: tubes-1:latest
-  #   hostname: soap
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - 8001:80
-  #   depends_on:
-  #     db:
-  #       condition: service_healthy
-  #     phpmyadmin:
-  #       condition: service_started
-  #   networks:
-  #     - binotify-soap
-
   db:
     container_name: soap_mysql
     image: mysql:latest
     hostname: mysql
     ports:
-      - 9001:3306
+      - "9001:3306"
     restart: always
     healthcheck:
       test: mysqladmin ping -h localhost -u${MYSQL_USER} -p{MYSQL_PASSWORD}
@@ -34,6 +18,20 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  binotify_soap:
+    container_name: soap
+    build: .
+    hostname: soap
+    env_file:
+      - .env
+    ports:
+      - "9000:9000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - binotify-soap
 
 volumes:
   mysql:

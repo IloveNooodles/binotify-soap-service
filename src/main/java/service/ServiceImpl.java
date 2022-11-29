@@ -1,8 +1,8 @@
-package ws;
+package service;
 
 import javax.jws.*;
 
-@WebService(endpointInterface = "ws.Service")
+@WebService(endpointInterface = "service.Service")
 public class ServiceImpl implements Service {
 
     @Override
