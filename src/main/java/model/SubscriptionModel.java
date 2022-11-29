@@ -4,7 +4,10 @@ import enums.Status;
 import lombok.Data;
 import lombok.NonNull;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 @Data
+@XmlRootElement(name = "Subscription")
 public class SubscriptionModel {
     private @NonNull int creator_id;
     private @NonNull int subscriber_id;

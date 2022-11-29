@@ -25,6 +25,7 @@ public class LoggingRepository extends BaseRepository {
             getLoggingById.setString(3, lm.getEndpoint());
             getLoggingById.execute();
             getLoggingById.close();
+            this.conn.commit();
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -102,6 +103,5 @@ public class LoggingRepository extends BaseRepository {
         } catch (SQLException e){
             e.printStackTrace();
         }
-
     }
 }

@@ -3,9 +3,11 @@ package model;
 import lombok.Data;
 import lombok.NonNull;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 @Data
+@XmlRootElement(name = "Logging")
 public class LoggingModel {
     private @NonNull int id;
     private @NonNull String description;

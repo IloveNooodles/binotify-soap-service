@@ -30,6 +30,7 @@ public class Mysql {
             String url = String.format("jdbc:mysql://%s:%d/%s?user=%s&password=%s&useSSL=false&allowPublicKeyRetrieval=true", "localhost", 9001, this.MYSQL_DATABASE, this.MYSQL_USER, this.MYSQL_PASSWORD);
             System.out.println("Connection successfully established...");
             this.conn = DriverManager.getConnection(url);
+            this.conn.setAutoCommit(false);
         } catch (Exception e) {
             System.out.println("Please provide correct env!");
             e.printStackTrace();
