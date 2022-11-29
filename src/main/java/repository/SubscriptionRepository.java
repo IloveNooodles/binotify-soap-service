@@ -48,15 +48,16 @@ public class SubscriptionRepository extends BaseRepository{
         return null;
     }
 
-    public List<SubscriptionModel> getSubscriptionBySubscriberId(int subscriber_id) throws SQLException {
-        String query = "SELECT * FROM Subscription WHERE subscriber_id = ? AND creator_id = ?";
+    public List<SubscriptionModel> getSubscriptionByStatus(Status s) throws SQLException {
+        String status = StatusConverter.StatusToString(s);
+        String query = "SELECT * FROM Subscription WHERE status = ? ";
         try {
             PreparedStatement getSubscriptionFromSubscriptionId = this.conn.prepareStatement(query);
-            getSubscriptionFromSubscriptionId.setString(1, Integer.toString(subscriber_id));
+            getSubscriptionFromSubscriptionId.setString(1, status);
             ResultSet rs = getSubscriptionFromSubscriptionId.executeQuery();
 
             if (!rs.isBeforeFirst()){
-                return null;
+                return new ArrayList<>();
             }
 
             List<SubscriptionModel> LSM = new ArrayList<SubscriptionModel>();
@@ -65,8 +66,8 @@ public class SubscriptionRepository extends BaseRepository{
                 SubscriptionModel sm = new SubscriptionModel();
                 sm.setCreator_id(rs.getInt(1));
                 sm.setSubscriber_id(rs.getInt(2));
-                Status s = StatusConverter.StringToStatus(rs.getString(3));
-                sm.setStatus(s);
+                Status statusRes = StatusConverter.StringToStatus(rs.getString(3));
+                sm.setStatus(statusRes);
                 LSM.add(sm);
             }
 
@@ -75,15 +76,15 @@ public class SubscriptionRepository extends BaseRepository{
         } catch (SQLException e){
             e.printStackTrace();
         }
-        return null;
+        return new ArrayList<>();
     }
 
-    public void subscribe(int creator_id, int subscriber_id){
+    public void subscribe(int creator_id, int subscriber_id) throws SQLException{
         String query = "INSERT INTO subscription (creator_id, subscriber_id) VALUES (?, ?)";
         try {
             PreparedStatement subscribe = this.conn.prepareStatement(query);
-            subscribe.setString(1, Integer.toString(subscriber_id));
-            subscribe.setString(2, Integer.toString(creator_id));
+            subscribe.setString(1, Integer.toString(creator_id));
+            subscribe.setString(2, Integer.toString(subscriber_id));
             subscribe.execute();
             this.conn.commit();
             subscribe.close();
@@ -92,7 +93,7 @@ public class SubscriptionRepository extends BaseRepository{
         }
     }
 
-    public void updateSubscription(int creator_id, int subscriber_id, Status s){
+    public void updateSubscription(int creator_id, int subscriber_id, Status s) throws SQLException{
         String status = StatusConverter.StatusToString(s);
         String query = "UPDATE subscription SET status = ? WHERE creator_id = ? AND subscriber_id = ?";
         try {
