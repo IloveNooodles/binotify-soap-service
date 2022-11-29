@@ -1,4 +1,11 @@
 package repository;
 
-public class SubscriptionRepository {
+import java.sql.Connection;
+
+public class SubscriptionRepository extends BaseRepository{
+    private Connection conn;
+
+    public SubscriptionRepository(){
+        this.conn = this.getDb().getConnection();
+    }
 }
