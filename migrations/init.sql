@@ -11,10 +11,10 @@ create table Logging(
 
 INSERT INTO Logging
 (description, IP, endpoint, requested_at)
-VALUES('See song', '135.20.19.1', '/Song', CURRENT_TIMESTAMP);
+VALUES('See song', '/135.20.19.1', '/check', CURRENT_TIMESTAMP);
 INSERT INTO binotify_soap.Logging
 (description, IP, endpoint, requested_at)
-VALUES('Subscription activating', '135.20.19.1', '/subscription', CURRENT_TIMESTAMP);
+VALUES('Subscription activating', '/135.20.19.1', '/subscription', CURRENT_TIMESTAMP);
 
 
 create table Subscription(
