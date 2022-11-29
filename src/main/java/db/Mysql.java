@@ -22,6 +22,7 @@ public class Mysql {
         this.MYSQL_HOST = dotenv.get("MYSQL_HOST", "localhost");
         this.MYSQL_PORT = Integer.parseInt(dotenv.get("MYSQL_PORT", "9001"));
         this.MYSQL_DATABASE = dotenv.get("MYSQL_DATABASE");
+        this.Connect();
     }
 
     public void Connect(){

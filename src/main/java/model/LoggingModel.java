@@ -1,20 +1,19 @@
 package model;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NonNull;
-import lombok.Setter;
 
 import java.util.Date;
 
-@Getter @Setter
-public class Logging {
+@Data
+public class LoggingModel {
     private @NonNull int id;
     private @NonNull String description;
     private @NonNull String IP;
     private @NonNull String endpoint;
     private @NonNull Date timestamp;
 
-    public Logging(){
+    public LoggingModel(){
         this.id = 0;
         this.description = "Default Value";
         this.IP = "localhost";
@@ -22,7 +21,7 @@ public class Logging {
         this.timestamp = new Date();
     }
 
-    public Logging(int id, String description, String IP, String endpoint, Date date){
+    public LoggingModel(int id, String description, String IP, String endpoint, Date date){
         this.id = id;
         this.description = description;
         this.IP = IP;
