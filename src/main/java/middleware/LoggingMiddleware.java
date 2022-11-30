@@ -1,7 +1,6 @@
 package middleware;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.xml.internal.ws.developer.JAXWSProperties;
 import model.LoggingModel;
 import service.LoggingService;
 
@@ -12,7 +11,7 @@ public class LoggingMiddleware {
     private static final LoggingService loggingService = new LoggingService();
 
     public LoggingMiddleware(MessageContext mc, String description, String endpoint){
-        HttpExchange httpExchange = (HttpExchange)mc.get(JAXWSProperties.HTTP_EXCHANGE);
+        HttpExchange httpExchange = (HttpExchange)mc.get("com.sun.xml.internal.ws.http.exchange");
         InetSocketAddress remoteAddress = httpExchange.getRemoteAddress();
         String IP = remoteAddress.getAddress().toString();
 

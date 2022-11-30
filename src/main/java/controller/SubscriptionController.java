@@ -1,11 +1,8 @@
 package controller;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.xml.internal.ws.developer.JAXWSProperties;
 import enums.ApiResp;
 import middleware.AuthMiddleware;
 import middleware.LoggingMiddleware;
-import model.ResponseModel;
 import model.SubscriptionModel;
 import service.SubscriptionService;
 
@@ -14,13 +11,10 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @WebService

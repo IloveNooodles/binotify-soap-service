@@ -16,18 +16,26 @@ public class Mysql {
     private String MYSQL_HOST;
 
     public Mysql(){
-        Dotenv dotenv = Dotenv.load();
-        this.MYSQL_USER = dotenv.get("MYSQL_USER");
-        this.MYSQL_PASSWORD = dotenv.get("MYSQL_PASSWORD");
-        this.MYSQL_HOST = dotenv.get("MYSQL_HOST", "localhost");
-        this.MYSQL_PORT = Integer.parseInt(dotenv.get("MYSQL_PORT", "9001"));
-        this.MYSQL_DATABASE = dotenv.get("MYSQL_DATABASE");
+        try {
+            Dotenv dotenv = Dotenv.load();
+            this.MYSQL_USER = dotenv.get("MYSQL_USER");
+            this.MYSQL_PASSWORD = dotenv.get("MYSQL_PASSWORD");
+            this.MYSQL_HOST = dotenv.get("MYSQL_HOST", "localhost");
+            this.MYSQL_PORT = Integer.parseInt(dotenv.get("MYSQL_PORT", "9001"));
+            this.MYSQL_DATABASE = dotenv.get("MYSQL_DATABASE");
+        } catch (Exception e){
+            this.MYSQL_USER = System.getenv("MYSQL_USER");
+            this.MYSQL_PASSWORD = System.getenv("MYSQL_PASSWORD");
+            this.MYSQL_HOST = System.getenv("MYSQL_HOST");
+            this.MYSQL_PORT = Integer.parseInt(System.getenv("MYSQL_PORT"));
+            this.MYSQL_DATABASE = System.getenv("MYSQL_DATABASE");
+        }
         this.Connect();
     }
 
     public void Connect(){
         try{
-            String url = String.format("jdbc:mysql://%s:%d/%s?user=%s&password=%s&useSSL=false&allowPublicKeyRetrieval=true", "localhost", 9001, this.MYSQL_DATABASE, this.MYSQL_USER, this.MYSQL_PASSWORD);
+            String url = String.format("jdbc:mysql://%s:%d/%s?user=%s&password=%s&useSSL=false&allowPublicKeyRetrieval=true", this.MYSQL_HOST, this.MYSQL_PORT, this.MYSQL_DATABASE, this.MYSQL_USER, this.MYSQL_PASSWORD);
             System.out.println("Connection successfully established...");
             this.conn = DriverManager.getConnection(url);
             this.conn.setAutoCommit(false);

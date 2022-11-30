@@ -23,8 +23,7 @@ services:
     container_name: soap
     build: .
     hostname: soap
-    env_file:
-      - .env
+    env_file: .env
     ports:
       - "9000:9000"
     depends_on:

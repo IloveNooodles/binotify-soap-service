@@ -75,6 +75,16 @@ public class SubscriptionService {
             if(sm == null){
                 return ApiResp.SUBSCRIPTION_NOT_FOUND;
             }
+
+            // Already Rejected and Accepted
+            if(sm.getStatus() == Status.REJECTED){
+                return ApiResp.ALREADY_REJECTED;
+            }
+
+            if(sm.getStatus() == Status.ACCEPTED){
+                return ApiResp.ALREADY_ACCEPTED;
+            }
+
             subscriptionRepository.updateSubscription(creator_id, subscriber_id, Status.REJECTED);
             return ApiResp.REJECT_SUBSCRIPTION;
         } catch (SQLException e){
@@ -95,9 +105,20 @@ public class SubscriptionService {
 
         try {
             SubscriptionModel sm = subscriptionRepository.getSubscriptionById(creator_id, subscriber_id);
+
             if(sm == null){
                 return ApiResp.SUBSCRIPTION_NOT_FOUND;
             }
+
+            // Already Rejected and Accepted
+            if(sm.getStatus() == Status.REJECTED){
+                return ApiResp.ALREADY_REJECTED;
+            }
+
+            if(sm.getStatus() == Status.ACCEPTED){
+                return ApiResp.ALREADY_ACCEPTED;
+            }
+
             subscriptionRepository.updateSubscription(creator_id, subscriber_id, Status.ACCEPTED);
             return ApiResp.ACCEPT_SUBSCRIPTION;
         } catch (SQLException e){

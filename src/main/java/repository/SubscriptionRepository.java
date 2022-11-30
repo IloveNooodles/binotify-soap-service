@@ -49,7 +49,7 @@ public class SubscriptionRepository extends BaseRepository{
     }
 
     public List<SubscriptionModel> getAcceptedSubscriptionBySubcriptionId(int subscriber_id) throws SQLException {
-        String query = "SELECT * FROM Subscription WHERE subscriber_id = ? AND status = 'ACCEPTED'";
+        String query = "SELECT * FROM Subscription WHERE subscriber_id = ?";
         try {
             PreparedStatement getSubscriptionFromId = this.conn.prepareStatement(query);
             getSubscriptionFromId.setString(1, Integer.toString(subscriber_id));
