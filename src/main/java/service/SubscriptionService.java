@@ -115,4 +115,14 @@ public class SubscriptionService {
         }
         return null;
     }
+
+    public List<SubscriptionModel> getAcceptedSubscriptionBySubcriptionId(int subscription_id){
+        try {
+            List<SubscriptionModel> result = subscriptionRepository.getAcceptedSubscriptionBySubcriptionId(subscription_id);
+            return result;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

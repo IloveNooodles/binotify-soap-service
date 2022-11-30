@@ -48,6 +48,36 @@ public class SubscriptionRepository extends BaseRepository{
         return null;
     }
 
+    public List<SubscriptionModel> getAcceptedSubscriptionBySubcriptionId(int subscriber_id) throws SQLException {
+        String query = "SELECT * FROM Subscription WHERE subscriber_id = ? AND status = 'ACCEPTED'";
+        try {
+            PreparedStatement getSubscriptionFromId = this.conn.prepareStatement(query);
+            getSubscriptionFromId.setString(1, Integer.toString(subscriber_id));
+            ResultSet rs = getSubscriptionFromId.executeQuery();
+
+            if (!rs.isBeforeFirst()){
+                return null;
+            }
+            List<SubscriptionModel> lsm = new ArrayList<>();
+
+
+            while(rs.next()){
+                SubscriptionModel sm = new SubscriptionModel();
+                sm.setCreator_id(rs.getInt(1));
+                sm.setSubscriber_id(rs.getInt(2));
+                Status s = StatusConverter.StringToStatus(rs.getString(3));
+                sm.setStatus(s);
+                lsm.add(sm);
+            }
+
+            return lsm;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
     public List<SubscriptionModel> getSubscriptionByStatus(Status s) throws SQLException {
         String status = StatusConverter.StatusToString(s);
         String query = "SELECT * FROM Subscription WHERE status = ? ";

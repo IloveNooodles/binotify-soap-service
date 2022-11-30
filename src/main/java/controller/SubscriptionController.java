@@ -89,7 +89,21 @@ public class SubscriptionController {
         }
 
         String description = String.format("Fetching all pending subscription");
-        LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/fetch");
+        LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/fetchPendingSubscription");
+        return lsm;
+    }
+
+    @WebMethod
+    public List<SubscriptionModel> getAcceptedSubscriptionBySubcriptionId(@WebParam(name = "subscriber_id") int subscriber_id){
+        MessageContext mc = wsContext.getMessageContext();
+        List<SubscriptionModel> lsm = subscriptionService.getAcceptedSubscriptionBySubcriptionId(subscriber_id);
+        AuthMiddleware authMiddleware = new AuthMiddleware(mc);
+        if(!authMiddleware.authenticate()){
+            return new ArrayList<>();
+        }
+
+        String description = String.format("Fetching subscription where subscriber id is %s", subscriber_id);
+        LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/fetchSubscription");
         return lsm;
     }
 
