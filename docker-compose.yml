@@ -1,9 +1,9 @@
 version: "3.9"
 services:
-  db:
-    container_name: soap_mysql
+  binotify-soap-service-db:
+    container_name: binotify-soap-service-db
     image: mysql:latest
-    hostname: mysql
+    hostname: binotify-soap-service-db
     ports:
       - "9001:3306"
     restart: always
@@ -19,15 +19,15 @@ services:
       - ./mysql:/var/lib/mysql
       - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  binotify_soap:
-    container_name: soap
+  binotify-soap-service-soap:
+    container_name: binotify-soap-service-soap
     build: .
-    hostname: soap
+    hostname: binotify-soap-service-soap
     env_file: .env
     ports:
       - "9000:9000"
     depends_on:
-      db:
+      binotify-soap-service-db:
         condition: service_healthy
     networks:
       - binotify-soap

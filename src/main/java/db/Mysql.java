@@ -20,7 +20,7 @@ public class Mysql {
             Dotenv dotenv = Dotenv.load();
             this.MYSQL_USER = dotenv.get("MYSQL_USER");
             this.MYSQL_PASSWORD = dotenv.get("MYSQL_PASSWORD");
-            this.MYSQL_HOST = dotenv.get("MYSQL_HOST", "localhost");
+            this.MYSQL_HOST = dotenv.get("MYSQL_HOST", "0.0.0.0");
             this.MYSQL_PORT = Integer.parseInt(dotenv.get("MYSQL_PORT", "9001"));
             this.MYSQL_DATABASE = dotenv.get("MYSQL_DATABASE");
         } catch (Exception e){
