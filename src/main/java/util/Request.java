@@ -75,12 +75,17 @@ public class Request {
     }
 
     public Object getResponseJson(String res) throws ParseException {
-        JSONParser parser = new JSONParser();
-        Object response = parser.parse(res);
-        return response;
+        try {
+            JSONParser parser = new JSONParser();
+            Object response = parser.parse(res);
+            return response;
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public Object send() throws IOException {
+    public String send() throws IOException {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(this.url).openConnection();
             conn.setDoOutput(true);
@@ -89,8 +94,8 @@ public class Request {
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             this.setByteParams();
             conn.getOutputStream().write(this.getPostData());
-            return this.getResponseJson(this.getStringResponse(conn));
-        } catch (IOException | ParseException e) {
+            return this.getStringResponse(conn);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -139,10 +144,6 @@ public class Request {
             return ApiResp.ALREADY_ACCEPTED;
         }
 
-        if(response.contains(ApiResp.INTERNAL_SERVER_ERROR)){
-            return ApiResp.INTERNAL_SERVER_ERROR;
-        }
-
         if(response.contains(ApiResp.ACCEPT_SUBSCRIPTION)){
             return ApiResp.ACCEPT_SUBSCRIPTION;
         }
@@ -151,17 +152,16 @@ public class Request {
             return ApiResp.REJECT_SUBSCRIPTION;
         }
 
-        return response;
+        return ApiResp.INTERNAL_SERVER_ERROR;
     }
 
     public static void main(String[] args){
-        Request r = new Request("http://localhost:8001/subscribed");
-        r.addParam("creator_id", 1);
-        r.addParam("subscriber_id", 1);
-        r.addParam("status", "PENDING");
+        Request r = new Request("http://localhost:8001/subscribed/update");
+        r.setParams(0, 0, "ACCEPTED");
+
         try {
             Object response = r.send();
-        } catch (IOException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
     }

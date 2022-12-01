@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoggingRepository extends BaseRepository {
+public class LoggingRepository extends Repository {
     private Connection conn;
 
     public LoggingRepository(){

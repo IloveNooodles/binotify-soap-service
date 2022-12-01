@@ -12,7 +12,7 @@ import util.StatusConverter;
 
 import model.SubscriptionModel;
 
-public class SubscriptionRepository extends BaseRepository{
+public class SubscriptionRepository extends Repository {
     private Connection conn;
 
     public SubscriptionRepository(){

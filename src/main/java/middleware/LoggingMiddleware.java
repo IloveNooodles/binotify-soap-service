@@ -13,7 +13,7 @@ public class LoggingMiddleware {
     public LoggingMiddleware(MessageContext mc, String description, String endpoint){
         HttpExchange httpExchange = (HttpExchange)mc.get("com.sun.xml.internal.ws.http.exchange");
         InetSocketAddress remoteAddress = httpExchange.getRemoteAddress();
-        String IP = remoteAddress.getAddress().toString();
+        String IP = remoteAddress.getAddress().toString().substring(1);
 
         LoggingModel lm = new LoggingModel();
         lm.setIP(IP);

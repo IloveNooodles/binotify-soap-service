@@ -28,8 +28,10 @@ public class SubscriptionController {
 
     @WebMethod
     public String subscribe(@WebParam(name = "creator_id") int creator_id, @WebParam(name = "subscriber_id") int subscriber_id){
+
         MessageContext mc = wsContext.getMessageContext();
         AuthMiddleware authMiddleware = new AuthMiddleware(mc);
+
         if(!authMiddleware.authenticate()){
             return ApiResp.NOT_AUTHENTICATED;
         }
@@ -40,8 +42,10 @@ public class SubscriptionController {
 
     @WebMethod
     public String checkStatus(@WebParam(name = "creator_id") int creator_id, @WebParam(name = "subscriber_id") int subscriber_id) {
+
         MessageContext mc = wsContext.getMessageContext();
         AuthMiddleware authMiddleware = new AuthMiddleware(mc);
+
         if(!authMiddleware.authenticate()){
             return ApiResp.NOT_AUTHENTICATED;
         }
@@ -52,19 +56,21 @@ public class SubscriptionController {
 
     @WebMethod
     public String rejectSubscription(@WebParam(name = "creator_id") int creator_id, @WebParam(name = "subscriber_id") int subscriber_id) throws IOException {
+
         MessageContext mc = wsContext.getMessageContext();
         AuthMiddleware authMiddleware = new AuthMiddleware(mc);
         if(!authMiddleware.authenticate()){
             return ApiResp.NOT_AUTHENTICATED;
         }
+
         String description = String.format("Admin rejecting subscription from subscriber_id %s to creator_id %s", subscriber_id, creator_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/reject");
 
-        Request r = new Request("http://localhost:8001/update");
-        r.setParams(creator_id, subscriber_id, "ACCEPTED");
+        Request r = new Request("http://localhost:8001/subscribed/update");
+        r.setParams(creator_id, subscriber_id, "REJECTED");
 
         try {
-            String response = r.responseMapping(r.send().toString());
+            String response = r.responseMapping(r.send());
 
             if(!response.equals(ApiResp.REJECT_SUBSCRIPTION)){
                 return response;
@@ -72,7 +78,7 @@ public class SubscriptionController {
 
             return subscriptionService.rejectSubscription(creator_id, subscriber_id);
 
-        } catch (IOException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         return ApiResp.INTERNAL_SERVER_ERROR;
@@ -90,19 +96,19 @@ public class SubscriptionController {
         String description = String.format("Admin accepting subscription from subscriber_id %s to creator_id %s", subscriber_id, creator_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/accept");
 
-        Request r = new Request("http://localhost:8001/update");
-        r.setParams(creator_id, subscriber_id, "REJECTED");
+        Request r = new Request("http://localhost:8001/subscribed/update");
+        r.setParams(creator_id, subscriber_id, "ACCEPTED");
 
         try {
-            String response = r.responseMapping(r.send().toString());
+            String response = r.responseMapping(r.send());
 
-            if(!response.equals(ApiResp.REJECT_SUBSCRIPTION)){
+            if(!response.equals(ApiResp.ACCEPT_SUBSCRIPTION)){
                 return response;
             }
 
             return subscriptionService.acceptSubscription(creator_id, subscriber_id);
 
-        } catch (IOException e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         return ApiResp.INTERNAL_SERVER_ERROR;
@@ -132,7 +138,7 @@ public class SubscriptionController {
             return new ArrayList<>();
         }
 
-        String description = String.format("subscriber_id %s is fetching subscription", subscriber_id);
+        String description = String.format("Subscriber_id %s is fetching subscription", subscriber_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/fetchSubscription");
         return lsm;
     }

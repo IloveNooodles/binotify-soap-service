@@ -4,10 +4,10 @@ import db.Mysql;
 import lombok.Data;
 
 @Data
-public class BaseRepository {
+public class Repository {
     protected Mysql db;
 
-    public BaseRepository(){
+    public Repository(){
         this.db = new Mysql();
     }
 }
