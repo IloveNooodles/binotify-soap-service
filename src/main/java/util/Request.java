@@ -2,8 +2,6 @@ package util;
 
 import enums.ApiResp;
 import middleware.AuthMiddleware;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -72,17 +70,6 @@ public class Request {
             e.printStackTrace();
         }
         return ApiResp.INTERNAL_SERVER_ERROR;
-    }
-
-    public Object getResponseJson(String res) throws ParseException {
-        try {
-            JSONParser parser = new JSONParser();
-            Object response = parser.parse(res);
-            return response;
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public String send() throws IOException {
