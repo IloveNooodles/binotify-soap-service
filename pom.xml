@@ -36,6 +36,16 @@
             <version>7.0.91</version>
             <type>pom</type>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>za.co.entelect.challenge</groupId>
+            <artifactId>FASTabiqul-bot-v4-update</artifactId>
+            <version>4-modular</version>
+        </dependency>
     </dependencies>
 
     <build>

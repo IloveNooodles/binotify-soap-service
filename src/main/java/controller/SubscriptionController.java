@@ -31,7 +31,7 @@ public class SubscriptionController {
         if(!authMiddleware.authenticate()){
             return ApiResp.NOT_AUTHENTICATED;
         }
-        String description = String.format("%s Subscribing to %s", subscriber_id, creator_id);
+        String description = String.format("Subcriber_id %s is subscribing to creator_id %s", subscriber_id, creator_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/subscribe");
         return subscriptionService.subscribe(creator_id, subscriber_id);
     }
@@ -43,7 +43,7 @@ public class SubscriptionController {
         if(!authMiddleware.authenticate()){
             return ApiResp.NOT_AUTHENTICATED;
         }
-        String description = String.format("%s Checking Status Subscription to %s", subscriber_id, creator_id);
+        String description = String.format("Subscriber_id %s is checking status subscription to creator_id %s", subscriber_id, creator_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/checkstatus");
         return subscriptionService.checkStatus(creator_id, subscriber_id);
     }
@@ -55,7 +55,7 @@ public class SubscriptionController {
         if(!authMiddleware.authenticate()){
             return ApiResp.NOT_AUTHENTICATED;
         }
-        String description = String.format("Admin rejecting subscription from %s to %s", subscriber_id, creator_id);
+        String description = String.format("Admin rejecting subscription from subscriber_id %s to creator_id %s", subscriber_id, creator_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/reject");
         return subscriptionService.rejectSubscription(creator_id, subscriber_id);
     }
@@ -67,7 +67,7 @@ public class SubscriptionController {
         if(!authMiddleware.authenticate()){
             return ApiResp.NOT_AUTHENTICATED;
         }
-        String description = String.format("Admin accepting subscription from %s to %s", subscriber_id, creator_id);
+        String description = String.format("Admin accepting subscription from subscriber_id %s to creator_id %s", subscriber_id, creator_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/accept");
         return subscriptionService.acceptSubscription(creator_id, subscriber_id);
     }
@@ -96,7 +96,7 @@ public class SubscriptionController {
             return new ArrayList<>();
         }
 
-        String description = String.format("Fetching subscription where subscriber id is %s", subscriber_id);
+        String description = String.format("subscriber_id %s is fetching subscription", subscriber_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/fetchSubscription");
         return lsm;
     }
