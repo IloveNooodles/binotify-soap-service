@@ -32,7 +32,7 @@ public class Request {
         this.params.put(key, value);
     }
 
-    public void setParams(String creator_id, String subscriber_id, String status){
+    public void setParams(int creator_id, int subscriber_id, String status){
         this.params.put("creator_id", creator_id);
         this.params.put("subscriber_id", subscriber_id);
         this.params.put("status", status);
@@ -95,6 +95,63 @@ public class Request {
         }
 
         return null;
+    }
+
+    public String responseMapping(String response){
+
+        if(response.contains(ApiResp.DATA_NOT_COMPLETE)){
+            return ApiResp.DATA_NOT_COMPLETE;
+        }
+
+        if(response.contains(ApiResp.INVALID_CREATOR_ID)){
+            return ApiResp.INVALID_CREATOR_ID;
+        }
+
+        if(response.contains(ApiResp.NOT_AUTHENTICATED)){
+            return ApiResp.NOT_AUTHENTICATED;
+        }
+
+        if(response.contains(ApiResp.INVALID_SUBSCRIBER_ID)){
+            return ApiResp.INVALID_SUBSCRIBER_ID;
+        }
+
+        if(response.contains(ApiResp.INTERNAL_SERVER_ERROR)){
+            return ApiResp.INTERNAL_SERVER_ERROR;
+        }
+
+        if(response.contains(ApiResp.SUBSCRIPTION_NOT_FOUND)){
+            return ApiResp.SUBSCRIPTION_NOT_FOUND;
+        }
+
+        if(response.contains(ApiResp.SUBSCRIPTION_SUCCESSFUL)){
+            return ApiResp.SUBSCRIPTION_SUCCESSFUL;
+        }
+
+        if(response.contains(ApiResp.SUBSCRIPTION_UPDATE_SUCCESSFUL)){
+            return ApiResp.SUBSCRIPTION_UPDATE_SUCCESSFUL;
+        }
+
+        if(response.contains(ApiResp.ALREADY_REJECTED)){
+            return ApiResp.ALREADY_REJECTED;
+        }
+
+        if(response.contains(ApiResp.ALREADY_ACCEPTED)){
+            return ApiResp.ALREADY_ACCEPTED;
+        }
+
+        if(response.contains(ApiResp.INTERNAL_SERVER_ERROR)){
+            return ApiResp.INTERNAL_SERVER_ERROR;
+        }
+
+        if(response.contains(ApiResp.ACCEPT_SUBSCRIPTION)){
+            return ApiResp.ACCEPT_SUBSCRIPTION;
+        }
+
+        if(response.contains(ApiResp.REJECT_SUBSCRIPTION)){
+            return ApiResp.REJECT_SUBSCRIPTION;
+        }
+
+        return response;
     }
 
     public static void main(String[] args){
