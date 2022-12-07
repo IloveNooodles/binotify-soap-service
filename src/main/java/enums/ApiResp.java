@@ -11,7 +11,7 @@ public class ApiResp {
     public static final String SUBSCRIPTION_NOT_FOUND = "SUBSCRIPTION_NOT_FOUND";
     public static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
     public static final String SUBSCRIPTION_SUCCESSFUL = "SUBSCRIPTION_SUCCESSFULY_CREATED";
-    public static final String SUBSCRIPTION_UPDATE_SUCCESSFUL = "SUBSCRIPTION_SUCCESSFULY_CREATED";
+    public static final String SUBSCRIPTION_UPDATE_SUCCESSFUL = "SUBSCRIPTION_SUCCESSFULY_UPDATED";
     public static final String CONNECT_FROM_REST = "CONNECTED_FROM_REST";
     public static final String CONNECT_FROM_PHP = "CONNECT_FROM_PHP";
     public static final String LOGGING_SUCCESFUL = "LOGGING_SUCCESFUL";

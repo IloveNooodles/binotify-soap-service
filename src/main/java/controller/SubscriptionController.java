@@ -37,7 +37,22 @@ public class SubscriptionController {
         }
         String description = String.format("Subcriber_id %s is subscribing to creator_id %s", subscriber_id, creator_id);
         LoggingMiddleware loggingMiddleware = new LoggingMiddleware(mc, description, "/subscribe");
-        return subscriptionService.subscribe(creator_id, subscriber_id);
+        Request r = new Request("http://localhost:8001/subscribed");
+        r.setParams(creator_id, subscriber_id, "PENDING");
+
+        try {
+            String response = r.responseMapping(r.send());
+
+            if(!response.equals(ApiResp.SUBSCRIPTION_SUCCESSFUL)){
+                return response;
+            }
+
+            return subscriptionService.subscribe(creator_id, subscriber_id);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return ApiResp.INTERNAL_SERVER_ERROR;
     }
 
     @WebMethod
